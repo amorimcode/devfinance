@@ -42,28 +42,36 @@ const transactions = [
 
 const Transaction = {
     // sum incomes
+    all: transactions,
+
+    add(transaction) {
+        Transaction.all.push(transaction)
+
+        App.reload()
+    },
+
     incomes() {
         let income = 0;
-        transactions.forEach(transaction => {
+        Transaction.all.forEach(transaction => {
             if (transaction.amount > 0) {
                 income += transaction.amount;
 
-            } 
+            }
         })
         return income;
     },
 
     expenses() {
         // sum expenses
-            let expenses = 0;
-            transactions.forEach(transaction => {
-                if (transaction.amount < 0) {
-                    expenses += transaction.amount;
-                } 
-            })
-            return expenses;
+        let expenses = 0;
+        Transaction.all.forEach(transaction => {
+            if (transaction.amount < 0) {
+                expenses += transaction.amount;
+            }
+        })
+        return expenses;
     },
-    
+
     total() {
         // entries - exits
         return Transaction.incomes() + Transaction.expenses();
@@ -106,6 +114,9 @@ const DOM = {
         document
             .getElementById('totalDisplay')
             .innerHTML = Utils.formatCurrecy(Transaction.total())
+    },
+    clearTransactions() {
+        DOM.transactionsContainer.innerHTML = ""
     }
 }
 
@@ -126,9 +137,31 @@ const Utils = {
     }
 }
 
-// forEach = para cada elemento do array ele ira executar uma function
-transactions.forEach(function (transaction) {
-    DOM.addTransaction(transaction)
-})
+const App = {
 
-DOM.updateBalance()
+    init() {
+        // forEach = para cada elemento do array ele ira executar uma function
+        Transaction.all.forEach(transaction => {
+            DOM.addTransaction(transaction)
+        })
+
+        DOM.updateBalance()
+
+
+    },
+    reload() {
+        DOM.clearTransactions()
+        App.init()
+    },
+}
+
+
+App.init()
+
+
+Transaction.add({
+    id: 39,
+    description: 'App',
+    amount: 200,
+    date: '11/02/2021'
+})
