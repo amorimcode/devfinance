@@ -16,28 +16,26 @@ const Modal = {
     }
 }
 
-const transactions = [
-    {
-        description: 'Luz',
-        amount: -50000,
-        date: '23/01/2021',
-    },
-    {
-        description: 'Website',
-        amount: 500000,
-        date: '23/01/2021',
-
-    },
-    {
-        description: 'Internet',
-        amount: -20000,
-        date: '23/01/2021',
-    },
-]
-
 const Transaction = {
     // sum incomes
-    all: transactions,
+    all: [
+        {
+            description: 'Luz',
+            amount: -50000,
+            date: '23/01/2021',
+        },
+        {
+            description: 'Website',
+            amount: 500000,
+            date: '23/01/2021',
+
+        },
+        {
+            description: 'Internet',
+            amount: -20000,
+            date: '23/01/2021',
+        },
+    ],
 
     add(transaction) {
         Transaction.all.push(transaction)
@@ -138,6 +136,39 @@ const Utils = {
     }
 }
 
+const Form = {
+    description: document.querySelector('input#description'),
+    amount: document.querySelector('input#amount'),
+    date: document.querySelector('input#date'),
+
+    getValue() {
+        return {
+            description: Form.description.value,
+            amount: Form.amount.value,
+            date: Form.date.value
+        }
+    }
+
+    formatData() {
+        console.log('Formatar dados')
+    },
+    validateFields() {
+        console.log('VALIDAR OS CAMPOS')
+    },
+    submit(event) {
+        event.preventDefault()
+
+        // veriricar se todas as informações foram preenchidas
+        Form.validateFields()
+        // formatar os dados para salvar
+        // Form.formatData()
+        // salvar
+        // apagar os dados do formulário
+        // fechar o modal
+        // atualizar a aplicação
+    }
+}
+
 const App = {
 
     init() {
@@ -155,6 +186,5 @@ const App = {
         App.init()
     },
 }
-
 
 App.init()
