@@ -178,14 +178,32 @@ const Form = {
 
         date = Utils.formatDate(date)
 
+        return {
+            description,
+            amount,
+            date
+        }
+    },
+
+    saveTransactions(transaction) {
+        Transaction.add(transaction)
+    },
+    
+    clearFields() {
+        Form.description.value = ""
+        Form.amount.value = ""
+        Form.date.value = ""
     },
 
     submit(event) {
         event.preventDefault()
 
         try {
-            Form.formatValues()
-
+            const transacion = Form.formatValues()
+            Form.saveTransactions()
+            Form.clearFields()
+            Modal.close()
+            App.reload()
         } catch (error) {
             alert(error.message)
             // try modal test
