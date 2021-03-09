@@ -203,7 +203,6 @@ const Form = {
             Form.saveTransactions()
             Form.clearFields()
             Modal.close()
-            App.reload()
         } catch (error) {
             alert(error.message)
             // try modal test
