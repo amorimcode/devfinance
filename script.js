@@ -83,22 +83,23 @@ const DOM = {
 
     addTransaction(transaction, index) {
         const tr = document.createElement('tr')
-        tr.innerHTML = DOM.innerHTMLTransaction(transaction)
+        tr.innerHTML = DOM.innerHTMLTransaction(transaction, index)
+        tr.dataset.index = index
 
         DOM.transactionsContainer.appendChild(tr)
     },
 
-    innerHTMLTransaction(transaction) {
+    innerHTMLTransaction(transaction, index) {
         const CSSclass = transaction.amount > 0 ? "income" : "expense"
 
         const amount = Utils.formatCurrecy(transaction.amount)
 
         const html = `        
-        <td class='description'>${transaction.description}</td>
-        <td class='${CSSclass}'>${amount}</td>
-        <td class='date'>${transaction.date}</td>
+        <td class="description">${transaction.description}</td>
+        <td class="${CSSclass}">${amount}</td>
+        <td class="date">${transaction.date}</td>
         <td>
-            <img src="./assets/minus.svg" alt="Remover Transação">
+            <img onclick="Transaction.remove(${index})" src="./assets/minus.svg" alt="Remover transação">
         </td>
         `
         return html
@@ -215,12 +216,11 @@ const App = {
 
     init() {
         // forEach = para cada elemento do array ele ira executar uma function
-        Transaction.all.forEach(transaction => {
-            DOM.addTransaction(transaction)
+        Transaction.all.forEach((transaction, index) => {
+            DOM.addTransaction(transaction, index)
         })
 
         DOM.updateBalance()
-
 
     },
     reload() {
