@@ -163,7 +163,7 @@ const Form = {
     },
 
     validateFields() {
-        const { description, amount, date } = Form.getValue()
+        const { description, amount, date } = Form.getValues()
         console.log(description)
         if (description.trim() === "" ||
             amount.trim() === "" ||
@@ -200,15 +200,14 @@ const Form = {
         event.preventDefault()
 
         try {
-            const transacion = Form.formatValues()
-            Form.saveTransactions()
+            Form.validateFields()
+            const transaction = Form.formatValues()
+            Transaction.add(transaction)
             Form.clearFields()
             Modal.close()
         } catch (error) {
             alert(error.message)
-            // try modal test
         }
-
     }
 }
 
